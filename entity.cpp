@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity::Entity(int id, int x, int y, int spdX, int spdY, int angle){
+Entity::Entity(int id, double x, double y, int spdX, int spdY, int angle){
 	this->id = id;
 	this->x = x;
 	this->y = y;

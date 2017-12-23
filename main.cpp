@@ -58,6 +58,12 @@ int main(){
 	blocks.push_back(block4);
 	Block block5 = Block(4, 1, 2100, 1550);
 	blocks.push_back(block5);
+	Block block6 = Block(5, 1, 2100, 1650);
+	blocks.push_back(block6);
+	Block block7 = Block(6, 1, 2000, 1700);
+	blocks.push_back(block7);
+	Block block8 = Block(7, 1, 2100, 1700);
+	blocks.push_back(block8);
 
 	setBrowserSize(0);
 	emscripten_set_main_loop(gameLoop, 0, 1);

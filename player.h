@@ -7,12 +7,12 @@
 
 class Player: public Entity{
 public:
-	int teamCode = -1, radius = 24, hp = 0, maxHp = 0, selectedWeapon = -1, score = 0, kills = 0, maxSpd = 3;
+	int teamCode = -1, radius = 18, hp = 0, maxHp = 0, selectedWeapon = -1, score = 0, kills = 0, maxSpd = 3;
 	double absSpd = 0, spdX = 0, spdY = 0;
 	bool pressingForward = 0, pressingBackward = 0;
 	int cameraWidth = 0, cameraHeight = 0;
 
-	Player(int id, int x, int y, int spdX, int spdY, int angle);
+	Player(int id, double x, double y, int spdX, int spdY, int angle);
 
 	void update();
 	void updateSpeed();

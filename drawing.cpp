@@ -221,10 +221,10 @@ void showElement(std::string elementName){
 }
 
 void drawMap(){
-	int mapStartX = 0;
-	int mapStartY = 0;
-	int mapEndX = MAX_MAP_WIDTH;
-	int mapEndY = MAX_MAP_HEIGHT;
+	double mapStartX = 0;
+	double mapStartY = 0;
+	double mapEndX = MAX_MAP_WIDTH;
+	double mapEndY = MAX_MAP_HEIGHT;
 
 	Location topLeftGridCorner = {mapStartX, mapStartY};
 	Location mapStart = camera.getRelativePosition(topLeftGridCorner);
@@ -237,14 +237,14 @@ void drawMap(){
 	setGlobalAlpha(0, 1);
 
 	//Horizontal Line Loop
-	for(int h = mapStartY - 1000; h < mapEndY + 1000; h += 25){
+	for(double h = mapStartY - 1000; h < mapEndY + 1000; h += 25){
 		beginPath(0);
 		moveTo(0, mapStart.x - 2000, mapStart.y + h);
 		lineTo(0, mapEnd.x + 2000, mapStart.y + h);
 		stroke(0);
 	}
 	//Vertical Line Loop
-	for(int v = mapStartX - 2000; v < mapEndX + 2000; v += 25){
+	for(double v = mapStartX - 2000; v < mapEndX + 2000; v += 25){
 		beginPath(0);
 		moveTo(0, mapStart.x + v, mapStart.y - 2000);
 		lineTo(0, mapStart.x + v, mapEnd.y + 2000);

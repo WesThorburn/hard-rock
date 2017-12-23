@@ -6,7 +6,7 @@
 #include "screen.h"
 #include "variables.h"
 
-Player::Player(int id, int x, int y, int spdX, int spdY, int angle): Entity(id, x, y, spdX, spdY, angle){
+Player::Player(int id, double x, double y, int spdX, int spdY, int angle): Entity(id, x, y, spdX, spdY, angle){
 }
 
 void Player::update(){
@@ -53,7 +53,7 @@ void Player::updateSpeed(){
 	//Check collisions
 	double testXPosition = this->x + this->spdX;
 	double testYPosition = this->y + this->spdY;
-	double reboundSpeed = this->maxSpd * 0.1;
+	double reboundSpeed = 0.3;
 	for(Block checkingBlock : blocks){
 		Block* block = &blocks.at(checkingBlock.id);
 		if(!block->active){
@@ -65,7 +65,7 @@ void Player::updateSpeed(){
 		double deltaX = 0.0;
 		double deltaY = 0.0;
 
-		deltaX = testXPosition - std::max(block->x, std::min((int)testXPosition, block->x + block->width));
+		deltaX = testXPosition - std::max(block->x, std::min(testXPosition, block->x + block->width));
 		deltaY = this->y - std::max(block->y, std::min(this->y, block->y + block->height));
 		if((pow(deltaX, 2) + pow(deltaY, 2)) < (pow(this->radius, 2))){
 			blockCollision = 1;
@@ -73,7 +73,7 @@ void Player::updateSpeed(){
 		}
 
 		deltaX = this->x - std::max(block->x, std::min(this->x, block->x + block->width));
-		deltaY = testYPosition - std::max(block->y, std::min((int)testYPosition, block->y + block->height));
+		deltaY = testYPosition - std::max(block->y, std::min(testYPosition, block->y + block->height));
 		if((pow(deltaX, 2) + pow(deltaY, 2)) < (pow(this->radius, 2))){
 			blockCollision = 1;
 			yAxisCollision = 1;
@@ -81,10 +81,52 @@ void Player::updateSpeed(){
 
 		blockCollision ? block->beingHit = 1 : block->beingHit = 0;
 
-		if(xAxisCollision){
+		if(xAxisCollision && yAxisCollision){
+			if(this->x <= block->x && this->y <= block->y){
+				if(this->spdX <= this->spdY){
+					this->spdX = -reboundSpeed;
+					this->spdY = 0;
+				}
+				else{
+					this->spdX = 0;
+					this->spdY = -reboundSpeed;
+				}
+			}
+			else if(this->x > block->x + block->width && this->y <= block->y){
+				if(this->spdY > 0 && this->spdY >= this->spdX){
+					this->spdX = reboundSpeed;
+					this->spdY = 0;
+				}
+				else{
+					this->spdX = 0;
+					this->spdY = -reboundSpeed;
+				}
+			}
+			else if(this->x <= block->x && this->y > block->y + block->height){
+				if(this->spdX > 0 && this->spdX >= this->spdY){
+					this->spdX = 0;
+					this->spdY = reboundSpeed;
+				}
+				else{
+					this->spdX = -reboundSpeed;
+					this->spdY = 0;
+				}
+			}
+			else if(this->x > block->x + block->width && this->y > block->y + block->height){
+				if(this->spdX >= this->spdY){
+					this->spdX = reboundSpeed;
+					this->spdY = 0;
+				}
+				else{
+					this->spdX = 0;
+					this->spdY = reboundSpeed;
+				}
+			}
+		}
+		if(xAxisCollision && !yAxisCollision){
 			this->spdX = 0;
 		}
-		if(yAxisCollision){
+		if(yAxisCollision && !xAxisCollision){
 			this->spdY = 0;
 		}
 	}
