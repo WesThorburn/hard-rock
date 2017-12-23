@@ -22,16 +22,20 @@ void Block::draw(){
 	setLineWidth(0, 2);
 	setStrokeStyle(0, 74, 74, 74);
 	setFillStyle(0, 136, 136, 136);
-	if(this->beingHit){
+	if(this->beingMined){
 		setFillStyle(0, 255, 0, 0);
 	}
 
 	beginPath(0);
 	moveTo(0, relPos.x, relPos.y);
-	lineTo(0, relPos.x + this->width, relPos.y);
-	lineTo(0, relPos.x + this->width, relPos.y + this->height);
-	lineTo(0, relPos.x, relPos.y + this->height);
+	lineTo(0, relPos.x + this->width - 1, relPos.y);
+	lineTo(0, relPos.x + this->width - 1, relPos.y + this->height - 1);
+	lineTo(0, relPos.x, relPos.y + this->height - 1);
 	lineTo(0, relPos.x, relPos.y);
 	stroke(0);
 	fill(0);
+}
+
+void Block::resetOneTickVariables(){
+	
 }

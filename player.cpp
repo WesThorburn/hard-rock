@@ -12,6 +12,7 @@ Player::Player(int id, double x, double y, int spdX, int spdY, int angle): Entit
 void Player::update(){
 	this->updateSpeed();
 	this->updatePosition();
+	this->handleMining();
 }
 
 void Player::updateSpeed(){
@@ -79,8 +80,6 @@ void Player::updateSpeed(){
 			yAxisCollision = 1;
 		}
 
-		blockCollision ? block->beingHit = 1 : block->beingHit = 0;
-
 		if(xAxisCollision && yAxisCollision){
 			if(this->x <= block->x && this->y <= block->y){
 				if(this->spdX <= this->spdY){
@@ -137,6 +136,37 @@ void Player::updatePosition(){
 	this->y += this->spdY;
 }
 
+void Player::handleMining(){
+	if(this->pressingMine){
+		Location drillTip = {
+			this->x + cos((this->angle) * (M_PI/180)) * (this->radius * 1.7), 
+			this->y + sin((this->angle) * (M_PI/180)) * (this->radius * 1.7)
+		};
+		int row = drillTip.x/50;
+		int col = drillTip.y/50;
+		int id = (row * BLOCK_COLS) + col;
+		if(id < blocks.size()){
+			this->mining = 1;
+			Block* blockToBeMined = &blocks.at(id);
+			blockToBeMined->beingMined = 1;
+			blockToBeMined->hp -= this->drillStrength;
+			if(blockToBeMined->hp <= 0){
+				blockToBeMined->hp = 0;
+				blockToBeMined->active = 0;
+			}
+		}
+	}
+	if(this->mining){
+		int shakeDirection = rand() % 2;
+		if(shakeDirection == 0){
+			this->angle++;
+		}
+		else{
+			this->angle--;
+		}
+	}
+}
+
 void Player::draw(){
 	if(this->radius > 0){
 		Location rawPosition = {this->x, this->y};
@@ -169,7 +199,7 @@ void Player::draw(){
 		//Drill mount
 		double drillMountX = cos((this->angle + 0) * (M_PI/180)) * (this->radius * 1.4) + relPos.x;
 		double drillMountY = sin((this->angle + 0) * (M_PI/180)) * (this->radius * 1.4) + relPos.y;
-		setLineWidth(0, 12);
+		setLineWidth(0, 5);
 		drawLine(0, relPos.x, relPos.y, drillMountX, drillMountY);
 
 		setFillStyle(0, 136, 136, 136);
@@ -242,11 +272,11 @@ void Player::draw(){
 		stroke(0);
 
 		//Outline
-		beginPath(0);
+		/*beginPath(0);
 		setLineWidth(0, 1);
 		setStrokeStyle(0, 255, 0, 0);
 		arc(0, relPos.x, relPos.y, this->radius);
-		stroke(0);
+		stroke(0);*/
 
 		//Hp Bar
 		if(this->hp > 0 && this->hp < this->maxHp){
@@ -271,4 +301,8 @@ void Player::draw(){
 			fill(0);
 		}
 	}
+}
+
+void Player::resetOneTickVariables(){
+	this->mining = 0;
 }

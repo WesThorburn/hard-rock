@@ -144,6 +144,9 @@ void onmousedown(int clientX, int clientY){
 
 	cursor.hudClick.x = clientX / hudScale.currentX;
 	cursor.hudClick.y = clientY / hudScale.currentY;
+
+	Player* player = &players.at(selfId);
+	player->pressingMine = 1;
 }
 EMSCRIPTEN_BINDINGS(onmousedown){
 	emscripten::function("onmousedown", &onmousedown);
@@ -156,6 +159,9 @@ void onmouseup(int clientX, int clientY){
 	cursor.hudClick.x = 0;
 	cursor.hudClick.y = 0;
 	clickingHud = 0;
+
+	Player* player = &players.at(selfId);
+	player->pressingMine = 0;
 }
 EMSCRIPTEN_BINDINGS(onmouseup){
 	emscripten::function("onmouseup", &onmouseup);

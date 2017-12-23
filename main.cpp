@@ -21,6 +21,12 @@ void gameLoop(){
 	Player* mainPlayer = &players.at(selfId);
 	mainPlayer->update();
 	mainPlayer->draw();
+	mainPlayer->resetOneTickVariables();
+
+	for(Block block : blocks){
+		Block* resettingBlock = &blocks.at(block.id);
+		resettingBlock->resetOneTickVariables();
+	}
 }
 
 void setGlobals(){
@@ -42,28 +48,20 @@ int main(){
 	camera.y = 1200;
 
 	//Create main player
-	Player player = Player(0, 1900, 1550, 0, 0, 0);
+	Player player = Player(0, 600, 300, 0, 0, 0);
 	players.push_back(player);
 	selfId = 0;
 	camera.trackingId = selfId;
 
 	//Create test boxes
-	Block block1 = Block(0, 1, 2000, 1600);
-	blocks.push_back(block1);
-	Block block2 = Block(1, 1, 2000, 1650);
-	blocks.push_back(block2);
-	Block block3 = Block(2, 1, 2100, 1600);
-	blocks.push_back(block3);
-	Block block4 = Block(3, 1, 2000, 1550);
-	blocks.push_back(block4);
-	Block block5 = Block(4, 1, 2100, 1550);
-	blocks.push_back(block5);
-	Block block6 = Block(5, 1, 2100, 1650);
-	blocks.push_back(block6);
-	Block block7 = Block(6, 1, 2000, 1700);
-	blocks.push_back(block7);
-	Block block8 = Block(7, 1, 2100, 1700);
-	blocks.push_back(block8);
+	int numBlocks = 0;
+	for(int row = 0; row < 10; row++){
+		for(int col = 0; col < 10; col++){
+			Block newBlock = Block(numBlocks, 1, row * 50, col * 50);
+			blocks.push_back(newBlock);
+			numBlocks++;
+		}
+	}
 
 	setBrowserSize(0);
 	emscripten_set_main_loop(gameLoop, 0, 1);

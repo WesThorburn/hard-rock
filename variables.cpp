@@ -2,6 +2,8 @@
 
 const int MAX_MAP_WIDTH = 7000;
 const int MAX_MAP_HEIGHT = 7000;
+const int BLOCK_ROWS = 10;
+const int BLOCK_COLS = 10;
 
 bool spectating = 0;
 bool debug = 1;

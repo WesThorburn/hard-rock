@@ -9,6 +9,8 @@
 
 extern const int MAX_MAP_WIDTH;
 extern const int MAX_MAP_HEIGHT;
+extern const int BLOCK_ROWS;
+extern const int BLOCK_COLS;
 
 extern bool spectating;
 extern bool debug;

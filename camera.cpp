@@ -13,8 +13,8 @@ void Camera::update(){
 }
 
 void Camera::reset(){
-	this->width = 1366;
-	this->height = 768;
+	this->width = 1093;
+	this->height = 614;
 	this->spdX = 0;
 	this->spdY = 0;
 }
