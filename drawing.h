@@ -2,6 +2,7 @@
 #define DRAWING_H
 
 #include <string>
+#include <vector>
 #include "coOrd.h"
 
 void setFillStyle(int ctxNum, int r, int g, int b);

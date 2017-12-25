@@ -1,5 +1,6 @@
 #include <emscripten.h>
 #include <iostream>
+#include "blockType.h"
 #include "screen.h"
 #include "drawing.h"
 #include "variables.h"
@@ -27,6 +28,8 @@ void gameLoop(){
 		Block* resettingBlock = &blocks.at(block.id);
 		resettingBlock->resetOneTickVariables();
 	}
+
+	drawHud();
 }
 
 void setGlobals(){
@@ -44,20 +47,33 @@ int main(){
 
 	//Default Camera Values
 	camera.reset();
-	camera.x = 1200;
-	camera.y = 1200;
 
 	//Create main player
-	Player player = Player(0, 600, 300, 0, 0, 0);
+	Player player = Player(0, -250, 300, 0, 0, 0);
+	player.setFuel(100);
 	players.push_back(player);
 	selfId = 0;
 	camera.trackingId = selfId;
 
 	//Create test boxes
 	int numBlocks = 0;
-	for(int row = 0; row < 10; row++){
-		for(int col = 0; col < 10; col++){
-			Block newBlock = Block(numBlocks, 1, row * 50, col * 50);
+	for(int row = 0; row < BLOCK_ROWS; row++){
+		for(int col = 0; col < BLOCK_COLS; col++){
+			BlockType type = ROCK;
+			int randType = rand() % 45;
+			if(randType == 1){
+				type = COPPER;
+			}
+			else if(randType == 2){
+				type = IRON;
+			}
+			if(col > 20 && col < 40){
+				if(randType == 3){
+					type = COAL;
+				}
+			}
+
+			Block newBlock = Block(numBlocks, type, col * 50, row * 50);
 			blocks.push_back(newBlock);
 			numBlocks++;
 		}

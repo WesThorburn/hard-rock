@@ -1,0 +1,18 @@
+#ifndef BLOCKTYPE_H
+#define BLOCKTYPE_H
+
+enum BlockType{
+	ROCK,
+	COPPER,
+	IRON,
+	COAL,
+	SILVER,
+	GOLD,
+	PLATINUM,
+	SAPPHIRE,
+	EMERALD,
+	RUBY,
+	DIAMOND,
+};
+
+#endif

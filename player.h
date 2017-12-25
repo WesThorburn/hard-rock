@@ -18,8 +18,14 @@ public:
 	void updateSpeed();
 	void updatePosition();
 	void handleMining();
+	void updateFuel();
 	void draw();
+	void setFuel(double liters);
+	std::string getFuel();
 	void resetOneTickVariables();
+
+private:
+	double fuel = 0.0;
 };
 
 #endif

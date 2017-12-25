@@ -255,7 +255,12 @@ void drawMap(){
 }
 
 void drawHud(){
-	
+	setStrokeStyle(0, 255, 0, 0);
+	setFontSize(0, 14);
+	setGlobalAlpha(0, 1);
+
+	Player player = players.at(selfId);
+	fillText(0, "Fuel: " + player.getFuel(), 3, 10);
 }
 
 void drawDebugVariables(){

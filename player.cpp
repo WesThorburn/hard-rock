@@ -10,9 +10,12 @@ Player::Player(int id, double x, double y, int spdX, int spdY, int angle): Entit
 }
 
 void Player::update(){
-	this->updateSpeed();
-	this->updatePosition();
-	this->handleMining();
+	if(this->fuel > 0){
+		this->updateSpeed();
+		this->updatePosition();
+		this->handleMining();
+	}
+	this->updateFuel();
 }
 
 void Player::updateSpeed(){
@@ -142,8 +145,8 @@ void Player::handleMining(){
 			this->x + cos((this->angle) * (M_PI/180)) * (this->radius * 1.7), 
 			this->y + sin((this->angle) * (M_PI/180)) * (this->radius * 1.7)
 		};
-		int row = drillTip.x/50;
-		int col = drillTip.y/50;
+		int row = drillTip.y/50;
+		int col = drillTip.x/50;
 		int id = (row * BLOCK_COLS) + col;
 		if(id < blocks.size()){
 			this->mining = 1;
@@ -164,6 +167,17 @@ void Player::handleMining(){
 		else{
 			this->angle--;
 		}
+	}
+}
+
+void Player::updateFuel(){
+	this->fuel -= 0.05;
+	if(this->mining){
+		this->fuel -= 0.025;
+	}
+
+	if(this->fuel < 0){
+		this->fuel = 0;
 	}
 }
 
@@ -301,6 +315,16 @@ void Player::draw(){
 			fill(0);
 		}
 	}
+}
+
+void Player::setFuel(double liters){
+	if(liters > 0){
+		this->fuel = liters;
+	}
+}
+
+std::string Player::getFuel(){
+	return std::to_string(this->fuel) + "L";
 }
 
 void Player::resetOneTickVariables(){
