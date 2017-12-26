@@ -251,16 +251,44 @@ void drawMap(){
 		stroke(0);
 	}
 
+	//Fuel Station
+	Location fuelStationStart = camera.getRelativePosition({100, -100});
+	setLineWidth(0, 2);
+	setFillStyle(0, 74, 74, 74);
+	setFontSize(0, 12);
 	setGlobalAlpha(0, 1);
+	fillText(0, "Refuel", fuelStationStart.x + 3, fuelStationStart.y + 10);
+
+	Player player = players.at(selfId);
+	setStrokeStyle(0, 74, 74, 74);
+	if(player.x > 100 && player.y > -100 && player.x < 200 && player.y < 0){
+		setStrokeStyle(0, 232, 196, 85);
+	}
+	drawCurvedRectangle(0, fuelStationStart.x, fuelStationStart.y, 100, 100, 2);
+
+	//Market
+	Location marketStart = camera.getRelativePosition({450, -100});
+	fillText(0, "Market", marketStart.x + 3, marketStart.y + 10);
+
+	setStrokeStyle(0, 74, 74, 74);
+	if(player.x > 450 && player.y > -100 && player.x < 550 && player.y < 0){
+		setStrokeStyle(0, 232, 196, 85);
+	}
+	drawCurvedRectangle(0, marketStart.x, marketStart.y, 100, 100, 2);
+	
 }
 
 void drawHud(){
+	setFillStyle(0, 255, 0, 0);
 	setStrokeStyle(0, 255, 0, 0);
-	setFontSize(0, 14);
+	setFontSize(0, 12);
 	setGlobalAlpha(0, 1);
 
 	Player player = players.at(selfId);
-	fillText(0, "Fuel: " + player.getFuel(), 3, 10);
+	fillText(0, "Fuel: " + std::to_string(player.getFuel()) + "L", 3, 10);
+	fillText(0, "Bank: $" + std::to_string(player.bank), 3, 22);
+	fillText(0, "X: " + std::to_string(player.x), 3, 34);
+	fillText(0, "Y: " + std::to_string(player.y), 3, 46);
 }
 
 void drawDebugVariables(){

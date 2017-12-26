@@ -49,18 +49,18 @@ int main(){
 	camera.reset();
 
 	//Create main player
-	Player player = Player(0, -250, 300, 0, 0, 0);
+	Player player = Player(0, 150, -100, 0, 0, 0);
 	player.setFuel(100);
 	players.push_back(player);
 	selfId = 0;
 	camera.trackingId = selfId;
 
-	//Create test boxes
+	//Generate map
 	int numBlocks = 0;
 	for(int row = 0; row < BLOCK_ROWS; row++){
 		for(int col = 0; col < BLOCK_COLS; col++){
 			BlockType type = ROCK;
-			int randType = rand() % 45;
+			int randType = rand() % 35;
 			if(randType == 1){
 				type = COPPER;
 			}

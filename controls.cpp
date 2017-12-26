@@ -44,29 +44,35 @@ void onkeydown(int keyCode){
 	switch(keyCode){
 		case 65: //a
 			keyDownMessage = "k,0,1";
+			player->pressingLeft = 1;
 			break;
 		case 68: //d
 			keyDownMessage = "k,1,1";
+			player->pressingRight = 1;
 			break;
 		case 87: //w
 			keyDownMessage = "k,2,1";
-			player->pressingForward = 1;
+			player->pressingUp = 1;
 			break;
 		case 83: //s
 			keyDownMessage = "k,3,1";
-			player->pressingBackward = 1;
+			player->pressingDown = 1;
 			break;
 		case 37: //left
 			keyDownMessage = "k,0,1";
+			player->pressingLeft = 1;
 			break;
 		case 39: //right
 			keyDownMessage = "k,1,1";
+			player->pressingRight = 1;
 			break;
 		case 38: //up
 			keyDownMessage = "k,2,1";
+			player->pressingUp = 1;
 			break;
 		case 40: //down
 			keyDownMessage = "k,3,1";
+			player->pressingDown = 1;
 			break;
 		case 49: //1
 			keyDownMessage = "k,8,1";
@@ -96,29 +102,35 @@ void onkeyup(int keyCode){
 	switch(keyCode){
 		case 65: //a
 			keyUpMessage = "k,0,0";
+			player->pressingLeft = 0;
 			break;
 		case 68: //d
 			keyUpMessage = "k,1,0";
+			player->pressingRight = 0;
 			break;
 		case 87: //w
 			keyUpMessage = "k,2,0";
-			player->pressingForward = 0;
+			player->pressingUp = 0;
 			break;
 		case 83: //s
 			keyUpMessage = "k,3,0";
-			player->pressingBackward = 0;
+			player->pressingDown = 0;
 			break;
 		case 37: //left
 			keyUpMessage = "k,0,0";
+			player->pressingLeft = 0;
 			break;
 		case 39: //right
 			keyUpMessage = "k,1,0";
+			player->pressingRight = 0;
 			break;
 		case 38: //up
 			keyUpMessage = "k,2,0";
+			player->pressingUp = 0;
 			break;
 		case 40: //down
 			keyUpMessage = "k,3,0";
+			player->pressingDown = 0;
 			break;
 	}
 	
@@ -144,9 +156,6 @@ void onmousedown(int clientX, int clientY){
 
 	cursor.hudClick.x = clientX / hudScale.currentX;
 	cursor.hudClick.y = clientY / hudScale.currentY;
-
-	Player* player = &players.at(selfId);
-	player->pressingMine = 1;
 }
 EMSCRIPTEN_BINDINGS(onmousedown){
 	emscripten::function("onmousedown", &onmousedown);
@@ -159,9 +168,6 @@ void onmouseup(int clientX, int clientY){
 	cursor.hudClick.x = 0;
 	cursor.hudClick.y = 0;
 	clickingHud = 0;
-
-	Player* player = &players.at(selfId);
-	player->pressingMine = 0;
 }
 EMSCRIPTEN_BINDINGS(onmouseup){
 	emscripten::function("onmouseup", &onmouseup);
@@ -223,9 +229,7 @@ void emitCursorData(){
 			playerAngle = 360 - playerAngle;
 		}
 		
-		if(playerAngle >= 0 && playerAngle < 360){
-			player->angle = round(playerAngle);
-		}
+		player->turretAngle = round(playerAngle);
 	
 		cursor.canvasOld.x = cursor.canvasNew.x;
 		cursor.canvasOld.y = cursor.canvasNew.y;
