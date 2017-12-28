@@ -252,7 +252,7 @@ void drawMap(){
 	}
 
 	//Fuel Station
-	Location fuelStationStart = camera.getRelativePosition({100, -100});
+	Location fuelStationStart = camera.getRelativePosition({1000, -100});
 	setLineWidth(0, 2);
 	setFillStyle(0, 74, 74, 74);
 	setFontSize(0, 12);
@@ -261,17 +261,17 @@ void drawMap(){
 
 	Player player = players.at(selfId);
 	setStrokeStyle(0, 74, 74, 74);
-	if(player.x > 100 && player.y > -100 && player.x < 200 && player.y < 0){
+	if(player.x > 1000 && player.y > -100 && player.x < 1100 && player.y < 0){
 		setStrokeStyle(0, 232, 196, 85);
 	}
 	drawCurvedRectangle(0, fuelStationStart.x, fuelStationStart.y, 100, 100, 2);
 
 	//Market
-	Location marketStart = camera.getRelativePosition({450, -100});
+	Location marketStart = camera.getRelativePosition({1400, -100});
 	fillText(0, "Market", marketStart.x + 3, marketStart.y + 10);
 
 	setStrokeStyle(0, 74, 74, 74);
-	if(player.x > 450 && player.y > -100 && player.x < 550 && player.y < 0){
+	if(player.x > 1400 && player.y > -100 && player.x < 1500 && player.y < 0){
 		setStrokeStyle(0, 232, 196, 85);
 	}
 	drawCurvedRectangle(0, marketStart.x, marketStart.y, 100, 100, 2);

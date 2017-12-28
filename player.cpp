@@ -85,12 +85,20 @@ void Player::updateSpeed(){
 		if(!block->active){
 			continue;
 		}
-		if(block->collidesWith(testX, this->y, this->radius)){
+		if(block->collidesWith(testX, this->y, this->radius)){ //X Axis check
 			this->spdX = 0;
 		}
-		if(block->collidesWith(this->x, testY, this->radius)){
+		if(block->collidesWith(this->x, testY, this->radius)){ //Y Axis check
 			this->spdY = 0;
 		}
+	}
+
+	//Stop speeds from reaching tiny numbers
+	if(this->spdX > -0.05 && this->spdX < 0.05){
+		this->spdX = 0;
+	}
+	if(this->spdY > -0.05 && this->spdY < 0.05){
+		this->spdY = 0;
 	}
 }
 
@@ -107,7 +115,10 @@ void Player::handleMining(){
 		return;
 	}
 
-	if(this->spdY == 0 && (this->pressingDown || this->pressingLeft || this->pressingRight)){
+	if((this->spdY != 0) || (this->spdX != 0 && (this->pressingLeft || this->pressingRight)) || (this->spdY != 0 && this->pressingDown)){
+		return;
+	}
+	else if(this->pressingDown || this->pressingLeft || this->pressingRight){
 		int blockId = 0;
 		switch(direction){
 			case 0:
@@ -153,7 +164,7 @@ void Player::handleMining(){
 void Player::updateFuel(){
 	this->fuel -= 0.005;
 	if(this->mining){
-		this->fuel -= 0.02;
+		this->fuel -= 0.025;
 	}
 
 	if(this->fuel < 0){
@@ -163,12 +174,12 @@ void Player::updateFuel(){
 
 void Player::interactWithUtilities(){
 	//Fuel Station
-	if(this->x > 100 && this->y > -100 && this->x < 200 && this->y < 0){
+	if(this->x > 1000 && this->x < 1100 && this->y > -100 && this->y < 0){
 		fillTank();
 	}
 
 	//Market
-	if(this->x > 450 && this->y > -100 && this->x < 550 && this->y < 0){
+	if(this->x > 1400 && this->x < 1500 && this->y > -100 && this->y < 0){
 		this->bank += cargo.getTotalValue();
 		this->cargo.reset();
 	}
