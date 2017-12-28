@@ -85,7 +85,6 @@ void Player::updateSpeed(){
 		if(!block->active){
 			continue;
 		}
-		block->testFlagged = 1;
 		if(block->collidesWith(testX, this->y, this->radius)){
 			this->spdX = 0;
 		}
@@ -101,9 +100,6 @@ void Player::updatePosition(){
 
 	this->row = this->y / 50;
 	this->col = this->x / 50;
-	if(this->y < 0){
-		this->row = 0;
-	}
 }
 
 void Player::handleMining(){
@@ -123,6 +119,11 @@ void Player::handleMining(){
 			case 2:
 				blockId = (this->row * BLOCK_COLS) + (this->col - 1);
 				break;
+		}
+
+		//Special case for surface row
+		if(this->y < 0 && direction == 1){
+			blockId = ((this->row) * BLOCK_COLS) + this->col;
 		}
 
 		if(blockId >= 0 && blockId < blocks.size()){
@@ -150,9 +151,9 @@ void Player::handleMining(){
 }
 
 void Player::updateFuel(){
-	this->fuel -= 0.01;
+	this->fuel -= 0.005;
 	if(this->mining){
-		this->fuel -= 0.015;
+		this->fuel -= 0.02;
 	}
 
 	if(this->fuel < 0){

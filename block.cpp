@@ -19,6 +19,10 @@ Block::Block(int id, BlockType typeCode, double x, double y){
 	else if(this->typeCode == COAL){
 		this->hp = 400;
 	}
+	else{
+		this->hp = 50 + ((this->y / 50) * 5); //Hp varies by depth
+	}
+	this->maxHp = this->hp;
 }
 
 void Block::draw(){
@@ -47,10 +51,6 @@ void Block::draw(){
 		setFillStyle(0, 92, 94, 95);
 	}
 
-	if(this->testFlagged){
-		setFillStyle(0, 255, 0, 0);
-	}
-
 	beginPath(0);
 	moveTo(0, relPos.x, relPos.y);
 	lineTo(0, relPos.x + this->width - 1, relPos.y);
@@ -72,5 +72,5 @@ bool Block::collidesWith(double objectX, double objectY, int objectRadius){
 }
 
 void Block::resetOneTickVariables(){
-	this->testFlagged = 0;
+	
 }

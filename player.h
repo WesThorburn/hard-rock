@@ -9,7 +9,7 @@
 class Player: public Entity{
 public:
 	int teamCode = -1, radius = 18, hp = 0, maxHp = 0, selectedWeapon = -1, score = 0, kills = 0;
-	int bank = 1200, drillStrength = 3, maxFuel = 100;
+	int bank = 1200, drillStrength = 4, maxFuel = 100;
 	int row = -1, col = -1, direction = 0; //0:right, 1:down, 2:left, 3:up
 	double absSpd = 0, spdX = 0, spdY = 0, maxSpdX = 3, maxSpdY = 3;
 	int turretAngle = 0;

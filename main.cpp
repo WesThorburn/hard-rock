@@ -20,13 +20,19 @@ void gameLoop(){
 	mainPlayer->draw();
 	mainPlayer->resetOneTickVariables();
 
-	for(Block block : blocks){
-		block.draw();
+	for(Block &block : blocks){
+		if(block.x > mainPlayer->x - 700 && block.x < mainPlayer->x + 600 && 
+		block.y > mainPlayer->y - 400 && block.y < mainPlayer->y + 300){
+			block.draw();
+		}
 	}
 
-	for(Block block : blocks){
-		Block* resettingBlock = &blocks.at(block.id);
-		resettingBlock->resetOneTickVariables();
+	for(Block &block : blocks){
+		if(block.x > mainPlayer->x - 700 && block.x < mainPlayer->x + 600 && 
+		block.y > mainPlayer->y - 400 && block.y < mainPlayer->y + 300){
+			Block* resettingBlock = &blocks.at(block.id);
+			resettingBlock->resetOneTickVariables();
+		}
 	}
 
 	drawHud();
@@ -67,9 +73,20 @@ int main(){
 			else if(randType == 2){
 				type = IRON;
 			}
-			if(col > 20 && col < 40){
+			if(row < 20){
+				if(randType == 3){
+					type = COPPER;
+				}
+				else if(randType == 4){
+					type = IRON;
+				}
+			}
+			else if(row > 20){
 				if(randType == 3){
 					type = COAL;
+				}
+				else if(randType == 4){
+					type = IRON;
 				}
 			}
 
