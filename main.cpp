@@ -81,12 +81,36 @@ int main(){
 					type = IRON;
 				}
 			}
-			else if(row > 20){
+			else if(row > 20 && row <= 40){
 				if(randType == 3){
 					type = COAL;
 				}
 				else if(randType == 4){
 					type = IRON;
+				}
+			}
+			else if(row > 40 && row <= 60){
+				if(randType == 3){
+					type = COAL;
+				}
+				else if(randType == 4){
+					type = SILVER;
+				}
+			}
+			else if(row > 60 && row <= 80){
+				if(randType == 3){
+					type = GOLD;
+				}
+				else if(randType == 4){
+					type = SILVER;
+				}
+			}
+			else if(row > 80 && row <= 100){
+				if(randType == 3){
+					type = GOLD;
+				}
+				else if(randType == 4){
+					type = PLATINUM;
 				}
 			}
 

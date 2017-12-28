@@ -50,6 +50,15 @@ void Block::draw(){
 	else if(this->typeCode == COAL){
 		setFillStyle(0, 92, 94, 95);
 	}
+	else if(this->typeCode == SILVER){
+		setFillStyle(0, 234, 247, 247);
+	}
+	else if(this->typeCode == GOLD){
+		setFillStyle(0, 160, 149, 64);
+	}
+	else if(this->typeCode == PLATINUM){
+		setFillStyle(0, 211, 221, 237);
+	}
 
 	beginPath(0);
 	moveTo(0, relPos.x, relPos.y);
