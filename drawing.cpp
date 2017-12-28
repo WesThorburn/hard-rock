@@ -289,6 +289,8 @@ void drawHud(){
 	fillText(0, "Bank: $" + std::to_string(player.bank), 3, 22);
 	fillText(0, "X: " + std::to_string(player.x), 3, 34);
 	fillText(0, "Y: " + std::to_string(player.y), 3, 46);
+
+	player.cargo.print();
 }
 
 void drawDebugVariables(){

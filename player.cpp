@@ -142,7 +142,7 @@ void Player::handleMining(){
 			Block* blockToBeMined = &blocks.at(blockId);
 			blockToBeMined->beingMined = 1;
 			blockToBeMined->hp -= this->drillStrength;
-			if(blockToBeMined->hp <= 0){
+			if(blockToBeMined->active && blockToBeMined->hp <= 0){
 				blockToBeMined->hp = 0;
 				blockToBeMined->active = 0;
 				this->cargo.increment(blockToBeMined->typeCode);
