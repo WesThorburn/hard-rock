@@ -15,14 +15,14 @@ void gameLoop(){
 
 	emitCursorData();
 
-	for(Block block : blocks){
-		block.draw();
-	}
-
 	Player* mainPlayer = &players.at(selfId);
 	mainPlayer->update();
 	mainPlayer->draw();
 	mainPlayer->resetOneTickVariables();
+
+	for(Block block : blocks){
+		block.draw();
+	}
 
 	for(Block block : blocks){
 		Block* resettingBlock = &blocks.at(block.id);

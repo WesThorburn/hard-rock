@@ -8,6 +8,7 @@
 
 Player::Player(int id, double x, double y, int spdX, int spdY, int angle): Entity(id, x, y, spdX, spdY, angle){
 	this->bank = 1200;
+	updatePosition();
 }
 
 void Player::update(){
@@ -59,27 +60,36 @@ void Player::updateSpeed(){
 	//x-axis friction
 	this->spdX *= 0.92;
 
-	//Check collisions
-	double testXPosition = this->x + this->spdX;
-	double testYPosition = this->y + this->spdY;
+	//Collision detection
+	std::vector<int> surroundingBlockIds = {
+		(this->row * BLOCK_COLS) + this->col,
+		((this->row - 1) * BLOCK_COLS) + (this->col - 1),
+		((this->row - 1) * BLOCK_COLS) + this->col,
+		((this->row - 1) * BLOCK_COLS) + (this->col + 1),
+		(this->row * BLOCK_COLS) + (this->col - 1),
+		(this->row * BLOCK_COLS) + (this->col + 1),
+		((this->row + 1) * BLOCK_COLS) + (this->col - 1),
+		((this->row + 1) * BLOCK_COLS) + this->col,
+		((this->row + 1) * BLOCK_COLS) + (this->col + 1)
+	};
 
-	for(Block checkingBlock : blocks){
-		Block* block = &blocks.at(checkingBlock.id);
+	double testX = this->x + this->spdX;
+	double testY = this->y + this->spdY;
+
+	//Y-Collision Check
+	for(auto &blockId : surroundingBlockIds){
+		if(blockId < 0 || blockId > blocks.size()){
+			continue;
+		}
+		Block* block = &blocks.at(blockId);
 		if(!block->active){
 			continue;
 		}
-		double deltaX = 0.0;
-		double deltaY = 0.0;
-
-		deltaX = testXPosition - std::max(block->x, std::min(testXPosition, block->x + block->width));
-		deltaY = this->y - std::max(block->y, std::min(this->y, block->y + block->height));
-		if((pow(deltaX, 2) + pow(deltaY, 2)) < (pow(this->radius, 2))){
+		block->testFlagged = 1;
+		if(block->collidesWith(testX, this->y, this->radius)){
 			this->spdX = 0;
 		}
-
-		deltaX = this->x - std::max(block->x, std::min(this->x, block->x + block->width));
-		deltaY = testYPosition - std::max(block->y, std::min(testYPosition, block->y + block->height));
-		if((pow(deltaX, 2) + pow(deltaY, 2)) < (pow(this->radius, 2))){
+		if(block->collidesWith(this->x, testY, this->radius)){
 			this->spdY = 0;
 		}
 	}
@@ -88,6 +98,12 @@ void Player::updateSpeed(){
 void Player::updatePosition(){
 	this->x += this->spdX;
 	this->y += this->spdY;
+
+	this->row = this->y / 50;
+	this->col = this->x / 50;
+	if(this->y < 0){
+		this->row = 0;
+	}
 }
 
 void Player::handleMining(){
@@ -96,24 +112,16 @@ void Player::handleMining(){
 	}
 
 	if(this->spdY == 0 && (this->pressingDown || this->pressingLeft || this->pressingRight)){
-		int playerRow = this->y / 50;
-		int playerCol = this->x / 50;
-
-		
-		if(this->y < 0){
-			playerRow -= 1;
-		}
-
 		int blockId = 0;
 		switch(direction){
 			case 0:
-				blockId = (playerRow * BLOCK_COLS) + (playerCol + 1);
+				blockId = (this->row * BLOCK_COLS) + (this->col + 1);
 				break;
 			case 1:
-				blockId = ((playerRow + 1) * BLOCK_COLS) + playerCol;
+				blockId = ((this->row + 1) * BLOCK_COLS) + this->col;
 				break;
 			case 2:
-				blockId = (playerRow * BLOCK_COLS) + (playerCol - 1);
+				blockId = (this->row * BLOCK_COLS) + (this->col - 1);
 				break;
 		}
 
