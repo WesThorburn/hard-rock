@@ -35,7 +35,7 @@ void Block::draw(){
 
 	double opacity = 1.0;
 	if(this->hp < this->maxHp){
-		opacity = static_cast<double>(this->hp) / static_cast<double>(this->maxHp);
+		opacity = static_cast<double>(this->hp) / static_cast<double>(this->maxHp) + 0.4;
 	}
 	setGlobalAlpha(0, opacity);
 	setLineWidth(0, 2);

@@ -164,7 +164,7 @@ void Player::handleMining(){
 void Player::updateFuel(){
 	this->fuel -= 0.005;
 	if(this->mining){
-		this->fuel -= 0.025;
+		this->fuel -= 0.055;
 	}
 
 	if(this->fuel < 0){
@@ -339,7 +339,7 @@ void Player::fillTank(){
 		return;
 	}
 	setFuel(this->fuel + 1);
-	this->bank = this->bank - 10;
+	this->bank = this->bank - 3;
 }
 
 double Player::getFuel(){

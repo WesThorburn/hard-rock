@@ -204,38 +204,5 @@ EMSCRIPTEN_BINDINGS(toggleDebug){
 }
 
 void emitCursorData(){
-	Player* player = &players.at(selfId);
-
-	/*if(spectating || selfId <= 0){
-		return;
-	}*/
-	//Check if cursor has moved since last update
-	if(cursor.canvasNew.x != cursor.canvasOld.x || cursor.canvasNew.y != cursor.canvasOld.y){
-		//Calculate relative cursor location
-		Player* player = &players.at(selfId);
-		Location playerRawPosition = {player->x, player->y};
-		Location playerRelPos = camera.getRelativePosition(playerRawPosition);
-
-		float mouseAngle = atan2(playerRelPos.y - cursor.canvasNew.y, playerRelPos.x - cursor.canvasNew.x) * 180/M_PI + 180;
-		float playerAngle = round(mouseAngle + (asin(18/sqrt(pow((playerRelPos.x - cursor.canvasNew.x), 2) + pow((playerRelPos.y - cursor.canvasNew.y), 2)))) * 180/M_PI);
-
-		int relativeCursorLocationX = round(playerRelPos.x - cursor.canvasNew.x);
-		int relativeCursorLocationY = round(playerRelPos.y - cursor.canvasNew.y);
-
-		if(playerAngle >= 360){
-			playerAngle = playerAngle - 360;
-		}
-		else if(playerAngle < 0){
-			playerAngle = 360 - playerAngle;
-		}
-		
-		player->turretAngle = round(playerAngle);
 	
-		cursor.canvasOld.x = cursor.canvasNew.x;
-		cursor.canvasOld.y = cursor.canvasNew.y;
-
-		//Emit cursor data
-		std::string cursorMessage = "m," + std::to_string(relativeCursorLocationX) + "," + std::to_string(relativeCursorLocationY) + "," + std::to_string(mouseAngle);
-		//send(cursorMessage);
-	}
 }
