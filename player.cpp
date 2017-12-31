@@ -7,21 +7,22 @@
 #include "variables.h"
 
 Player::Player(int id, double x, double y, int spdX, int spdY, int angle): Entity(id, x, y, spdX, spdY, angle){
-	this->bank = 1200;
 	updatePosition();
 }
 
 void Player::update(){
-	if(this->fuel > 0){
-		this->updateSpeed();
-		this->updatePosition();
-		this->handleMining();
-		this->interactWithUtilities();
-	}
+	this->updateSpeed();
+	this->updatePosition();
+	this->handleMining();
+	this->interactWithUtilities();
 	this->updateFuel();
 }
 
 void Player::updateSpeed(){
+	if(this->fuel <= 0){
+		disconnectUserInputs();
+	}
+
 	this->spdY += 0.098; //Acceleration due to gravity
 	double terminalVelocity = this->maxSpdY * 3;
 	double xAccelerationFactor = this->maxSpdX/3;
@@ -344,6 +345,13 @@ void Player::fillTank(){
 
 double Player::getFuel(){
 	return this->fuel;
+}
+
+void Player::disconnectUserInputs(){
+	this->pressingLeft = 0;
+	this->pressingRight = 0;
+	this->pressingUp = 0;
+	this->pressingDown = 0;
 }
 
 void Player::resetOneTickVariables(){

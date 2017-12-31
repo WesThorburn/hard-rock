@@ -204,5 +204,5 @@ EMSCRIPTEN_BINDINGS(toggleDebug){
 }
 
 void emitCursorData(){
-	
+
 }

@@ -56,7 +56,7 @@ int main(){
 
 	//Create main player
 	Player player = Player(0, 1000, -100, 0, 0, 0);
-	player.setFuel(100);
+	player.setFuel(5);
 	players.push_back(player);
 	selfId = 0;
 	camera.trackingId = selfId;
