@@ -56,7 +56,7 @@ int main(){
 
 	//Create main player
 	Player player = Player(0, 1000, -100, 0, 0, 0);
-	player.setFuel(5);
+	player.setFuel(100);
 	players.push_back(player);
 	selfId = 0;
 	camera.trackingId = selfId;
@@ -66,51 +66,41 @@ int main(){
 	for(int row = 0; row < BLOCK_ROWS; row++){
 		for(int col = 0; col < BLOCK_COLS; col++){
 			BlockType type = ROCK;
-			int randType = rand() % 35;
-			if(randType == 1){
-				type = COPPER;
-			}
-			else if(randType == 2){
-				type = IRON;
-			}
-			if(row < 20){
-				if(randType == 3){
-					type = COPPER;
-				}
-				else if(randType == 4){
-					type = IRON;
-				}
-			}
-			else if(row > 20 && row <= 40){
-				if(randType == 3){
-					type = COAL;
-				}
-				else if(randType == 4){
-					type = IRON;
-				}
-			}
-			else if(row > 40 && row <= 60){
-				if(randType == 3){
-					type = COAL;
-				}
-				else if(randType == 4){
-					type = SILVER;
-				}
-			}
-			else if(row > 60 && row <= 80){
-				if(randType == 3){
-					type = GOLD;
-				}
-				else if(randType == 4){
-					type = SILVER;
-				}
-			}
-			else if(row > 80 && row <= 100){
-				if(randType == 3){
-					type = GOLD;
-				}
-				else if(randType == 4){
-					type = PLATINUM;
+			int oreChance = rand() % 4;
+			if(row > 0 && oreChance == 0){
+				int rockVariety = (row/10) + 1;
+				int randType = rand() % rockVariety;
+				switch(randType){
+					case 1:
+						type = COPPER;
+						break;
+					case 2:
+						type = IRON;
+						break;
+					case 3:
+						type = COAL;
+						break;
+					case 4:
+						type = SILVER;
+						break;
+					case 5:
+						type = GOLD;
+						break;
+					case 6:
+						type = PLATINUM;
+						break;
+					case 7:
+						type = SAPPHIRE;
+						break;
+					case 8:
+						type = EMERALD;
+						break;
+					case 9:
+						type = RUBY;
+						break;
+					case 10:
+						type = DIAMOND;
+						break;
 				}
 			}
 
