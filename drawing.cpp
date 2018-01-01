@@ -4,6 +4,7 @@
 #include "variables.h"
 #include "location.h"
 #include "screen.h"
+#include "controls.h"
 
 void setFillStyle(int ctxNum, int r, int g, int b){
 	EM_ASM_({
@@ -251,15 +252,25 @@ void drawMap(){
 		stroke(0);
 	}
 
-	//Fuel Station
-	Location fuelStationStart = camera.getRelativePosition({1000, -100});
+	//Map utilities
 	setLineWidth(0, 2);
 	setFillStyle(0, 74, 74, 74);
+	setStrokeStyle(0, 74, 74, 74);
 	setFontSize(0, 12);
 	setGlobalAlpha(0, 1);
-	fillText(0, "Refuel", fuelStationStart.x + 3, fuelStationStart.y + 10);
-
 	Player player = players.at(selfId);
+
+	//Upgrade Shop
+	Location upgradeShopStart = camera.getRelativePosition({600, -100});
+	fillText(0, "Upgrades", upgradeShopStart.x + 3, upgradeShopStart.y + 10);
+	if(player.x > 600 && player.y > -100 && player.x < 700 && player.y < 0){
+		setStrokeStyle(0, 232, 196, 85);
+	}
+	drawCurvedRectangle(0, upgradeShopStart.x, upgradeShopStart.y, 100, 100, 2);
+
+	//Fuel Station
+	Location fuelStationStart = camera.getRelativePosition({1000, -100});
+	fillText(0, "Refuel", fuelStationStart.x + 3, fuelStationStart.y + 10);
 	setStrokeStyle(0, 74, 74, 74);
 	if(player.x > 1000 && player.y > -100 && player.x < 1100 && player.y < 0){
 		setStrokeStyle(0, 232, 196, 85);
@@ -269,13 +280,11 @@ void drawMap(){
 	//Market
 	Location marketStart = camera.getRelativePosition({1400, -100});
 	fillText(0, "Market", marketStart.x + 3, marketStart.y + 10);
-
 	setStrokeStyle(0, 74, 74, 74);
 	if(player.x > 1400 && player.y > -100 && player.x < 1500 && player.y < 0){
 		setStrokeStyle(0, 232, 196, 85);
 	}
 	drawCurvedRectangle(0, marketStart.x, marketStart.y, 100, 100, 2);
-	
 }
 
 void drawHud(){
@@ -291,6 +300,46 @@ void drawHud(){
 	fillText(0, "Y: " + std::to_string(player.y), 3, 46);
 
 	player.cargo.print();
+}
+
+void drawUserInterfaces(){
+	Player* player = &players.at(selfId);
+	if(player->insideUpgradeShop){
+		setFillStyle(0, 173, 178, 186);
+		setStrokeStyle(0, 173, 178, 186);
+		setTextAlign(0, "center");
+		setTextBaseline(0, "middle");
+		drawCurvedRectangle(0, 100, 100, 250, 250, 5);
+		fill(0);
+
+		//Fuel Tank
+		setFillStyle(0, 143, 147, 155);
+		drawCurvedRectangle(0, 125, 125, 200, 50, 2);
+		if(cursor.hudNew.x > 125 && cursor.hudNew.y > 125 && cursor.hudNew.x < 325 && cursor.hudNew.y < 175){
+			setFillStyle(0, 142, 138, 138);
+		}
+		if(cursor.hudClick.x > 125 && cursor.hudClick.y > 125 && cursor.hudClick.x < 325 && cursor.hudClick.y < 175){
+			player->upgrade(0);
+		}
+		fill(0);
+		setFillStyle(0, 74, 74, 74);
+		fillText(0, "Upgrade fuel tank", 225, 150);
+
+		//Drill
+		setFillStyle(0, 143, 147, 155);
+		drawCurvedRectangle(0, 125, 200, 200, 50, 2);
+		if(cursor.hudNew.x > 125 && cursor.hudNew.y > 200 && cursor.hudNew.x < 325 && cursor.hudNew.y < 250){
+			setFillStyle(0, 142, 138, 138);
+		}
+		if(cursor.hudClick.x > 125 && cursor.hudClick.y > 200 && cursor.hudClick.x < 325 && cursor.hudClick.y < 250){
+			player->upgrade(1);
+		}
+		fill(0);
+		setFillStyle(0, 74, 74, 74);
+		fillText(0, "Upgrade drill", 225, 225);
+	}
+	setTextAlign(0, "start");
+	setTextBaseline(0, "alphabetic");
 }
 
 void drawDebugVariables(){

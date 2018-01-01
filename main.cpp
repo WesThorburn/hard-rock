@@ -36,6 +36,7 @@ void gameLoop(){
 	}
 
 	drawHud();
+	drawUserInterfaces();
 }
 
 void setGlobals(){

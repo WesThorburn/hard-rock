@@ -36,6 +36,7 @@ void hideElement(std::string elementName);
 void showElement(std::string elementName);
 void drawMap();
 void drawHud();
+void drawUserInterfaces();
 void drawDebugVariables();
 
 #endif

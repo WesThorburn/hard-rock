@@ -174,6 +174,14 @@ void Player::updateFuel(){
 }
 
 void Player::interactWithUtilities(){
+	//Upgrade Shop
+	if(this->x > 600 && this->x < 700 && this->y > -100 && this->y < 0){
+		this->insideUpgradeShop = 1;
+	}
+	else{
+		this->insideUpgradeShop = 0;
+	}
+
 	//Fuel Station
 	if(this->x > 1000 && this->x < 1100 && this->y > -100 && this->y < 0){
 		fillTank();
@@ -336,11 +344,33 @@ void Player::setFuel(double liters){
 }
 
 void Player::fillTank(){
-	if(this->bank < 10 || this->fuel >= this->maxFuel - 1){
+	if(this->bank < 3 || this->fuel >= this->maxFuel - 1){
 		return;
 	}
 	setFuel(this->fuel + 1);
 	this->bank = this->bank - 3;
+}
+
+void Player::upgrade(int itemCode){
+	int upgradeCost = 0;
+	switch(itemCode){
+		case 0: //Fuel tank
+			upgradeCost = 1000 + (this->fuelTankLevel * 1000);
+			if(this->bank >= upgradeCost){
+				this->fuelTankLevel++;
+				this->maxFuel *= 1.3;
+				this->bank -= upgradeCost;
+			}
+			break;
+		case 1: //Drill
+			upgradeCost = 1000 + (this->drillStrengthLevel * 1000);
+			if(this->bank >= upgradeCost){
+				this->drillStrengthLevel++;
+				this->drillStrength *= 1.3;
+				this->bank -= upgradeCost;
+			}
+			break;
+	}
 }
 
 double Player::getFuel(){
