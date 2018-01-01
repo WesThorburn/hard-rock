@@ -1,6 +1,5 @@
 #include <emscripten.h>
 #include <iostream>
-#include "blockType.h"
 #include "screen.h"
 #include "drawing.h"
 #include "variables.h"
@@ -66,41 +65,41 @@ int main(){
 	int numBlocks = 0;
 	for(int row = 0; row < BLOCK_ROWS; row++){
 		for(int col = 0; col < BLOCK_COLS; col++){
-			BlockType type = ROCK;
+			Block::Type type = Block::ROCK;
 			int oreChance = rand() % 4;
 			if(row > 0 && oreChance == 0){
 				int rockVariety = (row/10) + 1;
 				int randType = rand() % rockVariety;
 				switch(randType){
 					case 1:
-						type = COPPER;
+						type = Block::COPPER;
 						break;
 					case 2:
-						type = IRON;
+						type = Block::IRON;
 						break;
 					case 3:
-						type = COAL;
+						type = Block::COAL;
 						break;
 					case 4:
-						type = SILVER;
+						type = Block::SILVER;
 						break;
 					case 5:
-						type = GOLD;
+						type = Block::GOLD;
 						break;
 					case 6:
-						type = PLATINUM;
+						type = Block::PLATINUM;
 						break;
 					case 7:
-						type = SAPPHIRE;
+						type = Block::SAPPHIRE;
 						break;
 					case 8:
-						type = EMERALD;
+						type = Block::EMERALD;
 						break;
 					case 9:
-						type = RUBY;
+						type = Block::RUBY;
 						break;
 					case 10:
-						type = DIAMOND;
+						type = Block::DIAMOND;
 						break;
 				}
 			}

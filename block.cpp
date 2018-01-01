@@ -3,7 +3,7 @@
 #include "screen.h"
 #include "drawing.h"
 
-Block::Block(int id, BlockType typeCode, double x, double y){
+Block::Block(int id, Type typeCode, double x, double y){
 	this->id = id;
 	this->typeCode = typeCode;
 	this->x = x;

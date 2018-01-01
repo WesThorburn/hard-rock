@@ -1,8 +1,8 @@
 #ifndef PAYLOAD_H
 #define PAYLOAD_H
 
-#include "blockType.h"
 #include "drawing.h"
+#include "block.h"
 
 struct Payload{
 	int rock_qty = 0;
@@ -29,39 +29,39 @@ struct Payload{
 	const int ruby_value = 5000;
 	const int diamand_value = 10000;
 
-	void increment(BlockType type){
+	void increment(Block::Type type){
 		switch(type){
-			case ROCK:
+			case Block::ROCK:
 				rock_qty++;
 				break;
-			case COPPER:
+			case Block::COPPER:
 				copper_qty++;
 				break;
-			case IRON:
+			case Block::IRON:
 				iron_qty++;
 				break;
-			case COAL:
+			case Block::COAL:
 				coal_qty++;
 				break;
-			case SILVER:
+			case Block::SILVER:
 				silver_qty++;
 				break;
-			case GOLD:
+			case Block::GOLD:
 				gold_qty++;
 				break;
-			case PLATINUM:
+			case Block::PLATINUM:
 				platinum_qty++;
 				break;
-			case SAPPHIRE:
+			case Block::SAPPHIRE:
 				sapphire_qty++;
 				break;
-			case EMERALD:
+			case Block::EMERALD:
 				emerald_qty++;
 				break;
-			case RUBY:
+			case Block::RUBY:
 				ruby_qty++;
 				break;
-			case DIAMOND:
+			case Block::DIAMOND:
 				diamond_qty++;
 				break;
 		}
