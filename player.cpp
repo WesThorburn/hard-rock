@@ -352,10 +352,9 @@ void Player::fillTank(){
 }
 
 void Player::upgrade(int itemCode){
-	int upgradeCost = 0;
+	int upgradeCost = getUpgradeCost(itemCode);
 	switch(itemCode){
 		case 0: //Fuel tank
-			upgradeCost = 1000 + (this->fuelTankLevel * 1000);
 			if(this->bank >= upgradeCost){
 				this->fuelTankLevel++;
 				this->maxFuel *= 1.3;
@@ -363,7 +362,6 @@ void Player::upgrade(int itemCode){
 			}
 			break;
 		case 1: //Drill
-			upgradeCost = 1000 + (this->drillStrengthLevel * 1000);
 			if(this->bank >= upgradeCost){
 				this->drillStrengthLevel++;
 				this->drillStrength *= 1.3;
@@ -371,6 +369,16 @@ void Player::upgrade(int itemCode){
 			}
 			break;
 	}
+}
+
+int Player::getUpgradeCost(int itemCode){
+	switch(itemCode){
+		case 0:
+			return 1000 + (this->fuelTankLevel * 1000);
+		case 1:
+			return 1000 + (this->drillStrengthLevel * 1000);
+	}
+	return 0;
 }
 
 double Player::getFuel(){

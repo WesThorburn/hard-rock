@@ -5,6 +5,7 @@
 #include "location.h"
 #include "screen.h"
 #include "controls.h"
+#include "player.h"
 
 void setFillStyle(int ctxNum, int r, int g, int b){
 	EM_ASM_({
@@ -302,44 +303,66 @@ void drawHud(){
 	player.cargo.print();
 }
 
+void drawUpgradeInterface(Player* player){
+	setFillStyle(0, 173, 178, 186);
+	setStrokeStyle(0, 173, 178, 186);
+	setTextAlign(0, "center");
+	setTextBaseline(0, "middle");
+	setFontSize(0, 12);
+	drawCurvedRectangle(0, 100, 100, 250, 250, 5);
+	fill(0);
+
+	//Fuel Tank
+	if(player->getUpgradeCost(0) <= player->getBankValue()){
+		setGlobalAlpha(0, 1);
+	}
+	else{
+		setGlobalAlpha(0, 0.5);
+	}
+
+	setFillStyle(0, 143, 147, 155);
+	drawCurvedRectangle(0, 125, 125, 200, 50, 2);
+	if(cursor.hudNew.x > 125 && cursor.hudNew.y > 125 && cursor.hudNew.x < 325 && cursor.hudNew.y < 175){
+		setFillStyle(0, 142, 138, 138);
+	}
+	if(cursor.hudClick.x > 125 && cursor.hudClick.y > 125 && cursor.hudClick.x < 325 && cursor.hudClick.y < 175){
+		player->upgrade(0);
+	}
+	fill(0);
+	setFillStyle(0, 74, 74, 74);
+	fillText(0, "Upgrade fuel tank", 225, 145);
+	fillText(0, "$" + std::to_string(player->getUpgradeCost(0)), 225, 159);
+
+	//Drill
+	if(player->getUpgradeCost(1) <= player->getBankValue()){
+		setGlobalAlpha(0, 1);
+	}
+	else{
+		setGlobalAlpha(0, 0.5);
+	}
+
+	setFillStyle(0, 143, 147, 155);
+	drawCurvedRectangle(0, 125, 200, 200, 50, 2);
+	if(cursor.hudNew.x > 125 && cursor.hudNew.y > 200 && cursor.hudNew.x < 325 && cursor.hudNew.y < 250){
+		setFillStyle(0, 142, 138, 138);
+	}
+	if(cursor.hudClick.x > 125 && cursor.hudClick.y > 200 && cursor.hudClick.x < 325 && cursor.hudClick.y < 250){
+		player->upgrade(1);
+	}
+	fill(0);
+	setFillStyle(0, 74, 74, 74);
+	fillText(0, "Upgrade drill", 225, 220);
+	fillText(0, "$" + std::to_string(player->getUpgradeCost(1)), 225, 234);
+
+	setTextAlign(0, "start");
+	setTextBaseline(0, "alphabetic");
+}
+
 void drawUserInterfaces(){
 	Player* player = &players.at(selfId);
 	if(player->insideUpgradeShop){
-		setFillStyle(0, 173, 178, 186);
-		setStrokeStyle(0, 173, 178, 186);
-		setTextAlign(0, "center");
-		setTextBaseline(0, "middle");
-		drawCurvedRectangle(0, 100, 100, 250, 250, 5);
-		fill(0);
-
-		//Fuel Tank
-		setFillStyle(0, 143, 147, 155);
-		drawCurvedRectangle(0, 125, 125, 200, 50, 2);
-		if(cursor.hudNew.x > 125 && cursor.hudNew.y > 125 && cursor.hudNew.x < 325 && cursor.hudNew.y < 175){
-			setFillStyle(0, 142, 138, 138);
-		}
-		if(cursor.hudClick.x > 125 && cursor.hudClick.y > 125 && cursor.hudClick.x < 325 && cursor.hudClick.y < 175){
-			player->upgrade(0);
-		}
-		fill(0);
-		setFillStyle(0, 74, 74, 74);
-		fillText(0, "Upgrade fuel tank", 225, 150);
-
-		//Drill
-		setFillStyle(0, 143, 147, 155);
-		drawCurvedRectangle(0, 125, 200, 200, 50, 2);
-		if(cursor.hudNew.x > 125 && cursor.hudNew.y > 200 && cursor.hudNew.x < 325 && cursor.hudNew.y < 250){
-			setFillStyle(0, 142, 138, 138);
-		}
-		if(cursor.hudClick.x > 125 && cursor.hudClick.y > 200 && cursor.hudClick.x < 325 && cursor.hudClick.y < 250){
-			player->upgrade(1);
-		}
-		fill(0);
-		setFillStyle(0, 74, 74, 74);
-		fillText(0, "Upgrade drill", 225, 225);
+		drawUpgradeInterface(player);
 	}
-	setTextAlign(0, "start");
-	setTextBaseline(0, "alphabetic");
 }
 
 void drawDebugVariables(){

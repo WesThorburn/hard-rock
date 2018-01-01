@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "coOrd.h"
+#include "player.h"
 
 void setFillStyle(int ctxNum, int r, int g, int b);
 void setStrokeStyle(int ctxNum, int r, int g, int b);
@@ -37,6 +38,7 @@ void showElement(std::string elementName);
 void drawMap();
 void drawHud();
 void drawUserInterfaces();
+void drawUpgradeInterface(Player* player);
 void drawDebugVariables();
 
 #endif

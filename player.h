@@ -28,9 +28,12 @@ public:
 	void draw();
 	void setFuel(double liters);
 	double getFuel();
+	int getBankValue(){ return bank; }
 	void fillTank();
 	void upgrade(int itemCode);
 	void resetOneTickVariables();
+	int getUpgradeCost(int itemCode);
+	friend void drawUpgradeInterface(Player* player);
 
 private:
 	double fuel = 0.0;
