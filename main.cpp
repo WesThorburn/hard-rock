@@ -16,7 +16,6 @@ void gameLoop(){
 
 	Player* mainPlayer = &players.at(selfId);
 	mainPlayer->update();
-	mainPlayer->draw();
 	mainPlayer->resetOneTickVariables();
 
 	for(Block &block : blocks){
@@ -33,6 +32,8 @@ void gameLoop(){
 			resettingBlock->resetOneTickVariables();
 		}
 	}
+
+	mainPlayer->draw();
 
 	drawHud();
 	drawUserInterfaces();

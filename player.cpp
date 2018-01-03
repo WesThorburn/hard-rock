@@ -204,95 +204,46 @@ void Player::draw(){
 		setStrokeStyle(0, 74, 74, 74);
 		setFillStyle(0, 74, 74, 74);
 
-		//Tracks
-		double trackFrontLeftX = cos((this->angle + 295) * (M_PI/180)) * this->radius + relPos.x;
-		double trackFrontLeftY = sin((this->angle + 295) * (M_PI/180)) * this->radius + relPos.y;
-		double trackFrontRightX = cos((this->angle + 65) * (M_PI/180)) * this->radius + relPos.x;
-		double trackFrontRightY = sin((this->angle + 65) * (M_PI/180)) * this->radius + relPos.y;
-		double trackBackRightX = cos((this->angle + 115) * (M_PI/180)) * this->radius + relPos.x;
-		double trackBackRightY = sin((this->angle + 115) * (M_PI/180)) * this->radius + relPos.y;
-		double trackBackLeftX = cos((this->angle + 245) * (M_PI/180)) * this->radius + relPos.x;
-		double trackBackLeftY = sin((this->angle + 245) * (M_PI/180)) * this->radius + relPos.y;
-
-		beginPath(0);
-		moveTo(0, trackFrontLeftX, trackFrontLeftY);
-		lineTo(0, trackFrontRightX, trackFrontRightY);
-		lineTo(0, trackBackRightX, trackBackRightY);
-		lineTo(0, trackBackLeftX, trackBackLeftY);
-		lineTo(0, trackFrontLeftX, trackFrontLeftY);
-		fill(0);
-		stroke(0);
-
 		//Drill mount
 		if(this->direction != 3){
-			double drillMountX = cos((this->angle + 0) * (M_PI/180)) * (this->radius * 1.4) + relPos.x;
-			double drillMountY = sin((this->angle + 0) * (M_PI/180)) * (this->radius * 1.4) + relPos.y;
-			setLineWidth(0, 5);
+			double drillMountX = cos((this->angle) * (M_PI/180)) * (this->radius * 1.2) + relPos.x;
+			double drillMountY = sin((this->angle) * (M_PI/180)) * (this->radius * 1.2) + relPos.y;
+			setLineWidth(0, 10);
 			drawLine(0, relPos.x, relPos.y, drillMountX, drillMountY);
 		}
 
-		setFillStyle(0, 136, 136, 136);
-		setLineWidth(0, 2);
-
-		//Rear
-		double rearStartLeftX = cos((this->angle + 215) * (M_PI/180)) * (this->radius * 0.8) + relPos.x;
-		double rearStartLeftY = sin((this->angle + 215) * (M_PI/180)) * (this->radius * 0.8) + relPos.y;
-		double rearEndLeftX = cos((this->angle + 200) * (M_PI/180)) * this->radius + relPos.x;
-		double rearEndLeftY = sin((this->angle + 200) * (M_PI/180)) * this->radius + relPos.y;
-		double rearStartRightX = cos((this->angle + 145) * (M_PI/180)) * (this->radius * 0.8) + relPos.x;
-		double rearStartRightY = sin((this->angle + 145) * (M_PI/180)) * (this->radius * 0.8) + relPos.y;
-		double rearEndRightX = cos((this->angle + 160) * (M_PI/180)) * this->radius + relPos.x;
-		double rearEndRightY = sin((this->angle + 160) * (M_PI/180)) * this->radius + relPos.y;
-
-		beginPath(0);
-		moveTo(0, rearStartLeftX, rearStartLeftY);
-		lineTo(0, rearEndLeftX, rearEndLeftY);
-		lineTo(0, rearEndRightX, rearEndRightY);
-		lineTo(0, rearStartRightX, rearStartRightY);
-		lineTo(0, rearStartLeftX, rearStartLeftY);
-		fill(0);
-		stroke(0);
-
 		//Body
-		double backLeftCornerX = cos((this->angle + 225) * (M_PI/180)) * this->radius + relPos.x;
-		double backLeftCornerY = sin((this->angle + 225) * (M_PI/180)) * this->radius + relPos.y;
-
-		double leftOuterCurveX = cos((this->angle + 310) * (M_PI/180)) * (this->radius * 0.9) + relPos.x;
-		double leftOuterCurveY = sin((this->angle + 310) * (M_PI/180)) * (this->radius * 0.9) + relPos.y;
-
-		double frontPointLeftX = cos((this->angle + 340) * (M_PI/180)) * this->radius + relPos.x;
-		double frontPointLeftY = sin((this->angle + 340) * (M_PI/180)) * this->radius + relPos.y;
-		double frontPointRightX = cos((this->angle + 20) * (M_PI/180)) * this->radius + relPos.x;
-		double frontPointRightY = sin((this->angle + 20) * (M_PI/180)) * this->radius + relPos.y;
-
-		double rightOuterCurveX = cos((this->angle + 50) * (M_PI/180)) * (this->radius * 0.9) + relPos.x;
-		double rightOuterCurveY = sin((this->angle + 50) * (M_PI/180)) * (this->radius * 0.9) + relPos.y;
-
-		double backRightCornerX = cos((this->angle + 135) * (M_PI/180)) * this->radius + relPos.x;
-		double backRightCornerY =  sin((this->angle + 135) * (M_PI/180)) * this->radius + relPos.y;
-
-		setLineCap(0, 1);
-		setLineJoin(0, 1);
-		beginPath(0);
-		moveTo(0, backLeftCornerX, backLeftCornerY);
-		lineTo(0, backRightCornerX, backRightCornerY);
-		lineTo(0, rightOuterCurveX, rightOuterCurveY);
-		lineTo(0, frontPointRightX, frontPointRightY);
-		lineTo(0, frontPointLeftX, frontPointLeftY);
-		lineTo(0, leftOuterCurveX, leftOuterCurveY);
-		lineTo(0, backLeftCornerX, backLeftCornerY);
+		setLineWidth(0, 4);
+		setFillStyle(0, 136, 136, 136);
+		drawCurvedRectangle(0, relPos.x - this->radius + 1, relPos.y - this->radius + 1, this->radius * 2 - 2, this->radius * 1.6 - 2, 5);
 		fill(0);
-		stroke(0);
+
+		//Tracks
+		drawCurvedRectangle(0, relPos.x - this->radius + 1, relPos.y + (this->radius * 0.8) - 1, this->radius * 2 - 2, this->radius * 0.2, 1);
+		fill(0);
+
+		//Window
+		setFillStyle(0, 74, 74, 74);
+		int windowXPosition = relPos.x + this->radius - (this->radius/2) - 1;
+		if(this->angle == 180){
+			windowXPosition = relPos.x - this->radius + 1;
+		}
+		drawCurvedRectangle(0, windowXPosition, relPos.y - (this->radius * 0.7), this->radius/2, this->radius * 0.2, 1);
+		fill(0);
 
 		//Drill
 		if(this->direction != 3){
-			double drillTipX = cos((this->angle + 0) * (M_PI/180)) * (this->radius * 1.7) + relPos.x;
-			double drillTipY = sin((this->angle + 0) * (M_PI/180)) * (this->radius * 1.7) + relPos.y;
-			double drillStartLeftX = cos((this->angle + 330) * (M_PI/180)) * (this->radius * 1.2) + relPos.x;
-			double drillStartLeftY = sin((this->angle + 330) * (M_PI/180)) * (this->radius * 1.2) + relPos.y;
-			double drillStartRightX = cos((this->angle + 30) * (M_PI/180)) * (this->radius * 1.2) + relPos.x;
-			double drillStartRightY = sin((this->angle + 30) * (M_PI/180)) * (this->radius * 1.2) + relPos.y;
+			double drillTipX = cos((this->angle) * (M_PI/180)) * (this->radius * 1.8) + relPos.x;
+			double drillTipY = sin((this->angle) * (M_PI/180)) * (this->radius * 1.8) + relPos.y;
+			double drillStartLeftX = cos((this->angle + 330) * (M_PI/180)) * (this->radius * 1.45) + relPos.x;
+			double drillStartLeftY = sin((this->angle + 330) * (M_PI/180)) * (this->radius * 1.45) + relPos.y;
+			double drillStartRightX = cos((this->angle + 30) * (M_PI/180)) * (this->radius * 1.45) + relPos.x;
+			double drillStartRightY = sin((this->angle + 30) * (M_PI/180)) * (this->radius * 1.45) + relPos.y;
 
+			setFillStyle(0, 136, 136, 136);
+			setLineJoin(0, 1);
+			setLineCap(0, 1);
+			setLineWidth(0, 2);
 			beginPath(0);
 			moveTo(0, drillStartLeftX, drillStartLeftY);
 			lineTo(0, drillStartRightX, drillStartRightY);
@@ -301,13 +252,6 @@ void Player::draw(){
 			fill(0);
 			stroke(0);
 		}
-
-		//Outline
-		/*beginPath(0);
-		setLineWidth(0, 1);
-		setStrokeStyle(0, 255, 0, 0);
-		arc(0, relPos.x, relPos.y, this->radius);
-		stroke(0);*/
 
 		//Hp Bar
 		if(this->hp > 0 && this->hp < this->maxHp){
