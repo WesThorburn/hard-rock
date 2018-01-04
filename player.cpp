@@ -155,10 +155,10 @@ void Player::handleMining(){
 		if(this->mining){
 			int shakeDirection = rand() % 2;
 			if(shakeDirection == 0){
-				this->angle++;
+				this->angle += 1;
 			}
 			else{
-				this->angle--;
+				this->angle -= 1;
 			}
 		}
 	}
@@ -214,8 +214,44 @@ void Player::draw(){
 			drawLine(0, relPos.x, relPos.y, drillMountX, drillMountY);
 		}
 
+		//Jet blast
+		if(this->pressingUp){
+			setLineWidth(0, 1);
+			setGlobalAlpha(0, 0.6);
+			setStrokeStyle(0, 248, 192, 132);
+			setFillStyle(0, 248, 192, 132);
+			beginPath(0);
+			moveTo(0, (relPos.x - this->radius * 0.3), relPos.y + this->radius);
+			lineTo(0, (relPos.x - this->radius * 0.3), relPos.y + this->radius * 2);
+			lineTo(0, (relPos.x - this->radius * 0.15), relPos.y + this->radius * 2.7);
+			lineTo(0, relPos.x, relPos.y + this->radius * 3);
+			lineTo(0, (relPos.x + this->radius * 0.15), relPos.y + this->radius * 2.7);
+			lineTo(0, (relPos.x + this->radius * 0.3), relPos.y + this->radius * 2);
+			lineTo(0, (relPos.x + this->radius * 0.3), relPos.y + this->radius);
+			lineTo(0, (relPos.x - this->radius * 0.3), relPos.y + this->radius);
+			stroke(0);
+			fill(0);
+
+			setStrokeStyle(0, 201, 246, 255);
+			setFillStyle(0, 201, 246, 255);
+			beginPath(0);
+			moveTo(0, (relPos.x - this->radius * 0.5), relPos.y + this->radius);
+			lineTo(0, (relPos.x - this->radius * 0.5), relPos.y + this->radius * 1.5);
+			lineTo(0, (relPos.x - this->radius * 0.3), relPos.y + this->radius * 1.35);
+			lineTo(0, (relPos.x - this->radius * 0.1), relPos.y + this->radius * 1.45);
+			lineTo(0, (relPos.x + this->radius * 0.1), relPos.y + this->radius * 1.45);
+			lineTo(0, (relPos.x + this->radius * 0.3), relPos.y + this->radius * 1.35);
+			lineTo(0, (relPos.x + this->radius * 0.5), relPos.y + this->radius * 1.5);
+			lineTo(0, (relPos.x + this->radius * 0.5), relPos.y + this->radius);
+			lineTo(0, (relPos.x - this->radius * 0.5), relPos.y + this->radius);
+			stroke(0);
+			fill(0);
+		}
+
 		//Body
+		setGlobalAlpha(0, 1);
 		setLineWidth(0, 4);
+		setStrokeStyle(0, 74, 74, 74);
 		setFillStyle(0, 136, 136, 136);
 		drawCurvedRectangle(0, relPos.x - this->radius + 1, relPos.y - this->radius + 1, this->radius * 2 - 2, this->radius * 1.6 - 2, 5);
 		fill(0);
