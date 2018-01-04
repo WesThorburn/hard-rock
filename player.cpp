@@ -30,10 +30,12 @@ void Player::updateSpeed(){
 	if(this->pressingLeft){
 		this->spdX -= xAccelerationFactor;
 		direction = 2;
+		windowDirection = 0;
 	}
 	else if(this->pressingRight){
 		this->spdX += xAccelerationFactor;
 		direction = 0;
+		windowDirection = 1;
 	}
 	if(this->pressingUp){
 		this->spdY -= yAccelerationFactor;
@@ -224,9 +226,9 @@ void Player::draw(){
 
 		//Window
 		setFillStyle(0, 74, 74, 74);
-		int windowXPosition = relPos.x + this->radius - (this->radius/2) - 1;
-		if(this->angle == 180){
-			windowXPosition = relPos.x - this->radius + 1;
+		int windowXPosition = relPos.x - this->radius + 1;
+		if(this->windowDirection == 1){
+			windowXPosition = relPos.x + this->radius - (this->radius/2) - 1;
 		}
 		drawCurvedRectangle(0, windowXPosition, relPos.y - (this->radius * 0.7), this->radius/2, this->radius * 0.2, 1);
 		fill(0);
